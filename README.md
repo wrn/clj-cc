@@ -23,25 +23,25 @@ If you are interested, you can read our debate on Google Clojure group:
 
 Let me know if you have suggestions for more functions to be included in this lib. Thanks.
 
-Note 1: the name "core candidates" does not imply and official support from the Clojure
+Note 1: the name "core candidates" does not imply any official support from the Clojure
 team. One of the purposes of this library is for me to get such support from the
 community.
 
 Note 2: Some people may wonder why I am not happy just to use these functions as they are
 without being included in the core. Several reasons. 1) these are very basic functions. If
 people agree with me that those functions are better than what is already in the core, or filled
-a gap in the core, then that is the logical place for them. 2) If they are in the core, they 
-benefit every one using the language and hence also the language itself. 3) If they are in the core, 
+a gap in the core, then that is the logical place for them. 2) If they are in the core, they
+benefit every one using the language and hence also the language itself. 3) If they are in the core,
 they may be optimized to achieve efficiency not possible otherwise because the implementation
 may have access to some internal parts. And the better efficiency will benefit every one too.
 
-Note 3: For reasons in Note 2, please focus on the function interface and not the efficiency now. 
+Note 3: For reasons in Note 2, please focus on the function interface and not the efficiency now.
 Of course you are welcome to help me improve the efficiency even with the limitation that they are
 outside of the core.
 
 ## Usage
 
-This is a very simple library. You can just directly copy the single file 
+This is a very simple library. You can just directly copy the single file
 src/clj_cc/core.clj into the "src" directory of your own project.
 (a Clojar lib may be available later).
 
@@ -50,12 +50,14 @@ Right now there are only three functions, here are their doc strings:
 -------------------------
 clj-cc.core/last
 ([coll])
+
   Like the original 'clojure.core/last'. However, it will be much more efficient on
   vectors, so we don't need to choose between 'last' and 'peek'.
 
 -------------------------
 clj-cc.core/append
 ([coll & more])
+
   Append collections in 'more' into 'coll', and returns the new collection in the same concreate type as 'coll'.
 
 Examples:
@@ -65,6 +67,7 @@ Examples:
 -------------------------
 clj-cc.core/slice
 ([seq start] [seq start end])
+
   Like the original 'clojure.core/subvec'. However, it works on any 'clojure.lang.Seqable'
   types, and returns the sliced sequence in the same concrete type as the input 'seq'.
 
