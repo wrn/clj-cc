@@ -61,7 +61,9 @@ clj-cc.core/append
   Append collections in 'more' into 'coll', and returns the new collection in the same concreate type as 'coll'.
 
 Examples:
+
 (append [1 2] '(3 4)) => [1 2 3 4]
+
 (append '(1 2) [3 4] '(5 6)) => (1 2 3 4 5 6)
 
 -------------------------
@@ -72,8 +74,11 @@ clj-cc.core/slice
   types, and returns the sliced sequence in the same concrete type as the input 'seq'.
 
 Examples:
+
 (slice [1 2 3 5 6] 1 3) => [2 3]
+
 (slice '(1 2 3 5 6) 1 3) => (2 3)
+
 (slice '(1 2 3 5 6) 1) => (2 3 5 6)
 
 ## License
