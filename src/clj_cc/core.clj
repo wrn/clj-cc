@@ -35,6 +35,11 @@
 Examples:
 (append [1 2] '(3 4)) => [1 2 3 4]
 (append '(1 2) [3 4] '(5 6)) => (1 2 3 4 5 6)
+
+Compared to 'into':
+(into [1 2] '(3 4)) => [1 2 3 4]
+(into '(1 2) [3 4]) => (4 3 1 2)  ;; order messed up!
+(into '(1 2) [3 4] '(5 6)) => clojure.lang.ArityException
 "
   [coll & more]
   (.invoke (create-method (class coll)) nil

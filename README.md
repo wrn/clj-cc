@@ -6,7 +6,7 @@ that keeps a clear separation between abstraction and concrete types.
 
 In a broader context, this arises from my disagreement with certain "design choices" some
 people claim to be the rationale behind certain things in Clojure. One of the issues is, some people
-think we whould have different functions for different concrete types ("last" for lists, and
+think we should have different functions for different concrete types ("last" for lists, and
 "peek" for vectors, for example) so we can avoid using the wrong functions on a type that results
 in poor performance. On the contrary, I think that approach defeats the purpose of abstraction and
 makes writing generic code difficult, which is one of major advantages of using a dynamically typed
@@ -80,7 +80,6 @@ clj-cc.core/last
 -------------------------
 clj-cc.core/append
 ([coll & more])
-
   Append collections in 'more' into 'coll', and returns the new collection in the same concreate type as 'coll'.
 
 Examples:
@@ -88,6 +87,14 @@ Examples:
 (append [1 2] '(3 4)) => [1 2 3 4]
 
 (append '(1 2) [3 4] '(5 6)) => (1 2 3 4 5 6)
+
+Compared to 'into':
+
+(into [1 2] '(3 4)) => [1 2 3 4]
+
+(into '(1 2) [3 4]) => (4 3 1 2)  ;; order messed up!
+
+(into '(1 2) [3 4] '(5 6)) => clojure.lang.ArityException
 
 -------------------------
 clj-cc.core/slice
