@@ -1,13 +1,25 @@
 
 (ns clj-cc.core)
 
-(defn last
-  "Like the original 'clojure.core/last'. However, it will be much more efficient on
-  vectors, so we don't need to choose between 'last' and 'peek'."
-  [coll]
-  (cond
-    (vector? coll) (nth coll (dec (count coll)))
-    :else (clojure.core/last coll)))
+;; Thank puzzler for the protocol based implementation.
+(defprotocol ILast
+  (last [s]
+    "Like the original 'clojure.core/last'. However, it will be much more efficient on
+  vectors, so we don't need to choose between 'last' and 'peek'."))
+
+(extend-protocol ILast
+  nil
+  (last [s] (clojure.core/last s))
+  Object
+  (last [s] (clojure.core/last s))
+  clojure.lang.ISeq
+  (last [s] (clojure.core/last s))
+  clojure.lang.Reversible
+  (last [s] (first (rseq s)))
+  java.lang.String
+  (last [s] (nth s (dec (count s))))
+  clojure.lang.IPersistentVector
+  (last [s] (peek s)))
 
 (defn- create-method [c]
   (.getMethod (if (isa? c clojure.lang.ISeq)
