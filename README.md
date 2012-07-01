@@ -11,7 +11,8 @@ think we whould have different functions for different concrete types ("last" fo
 in poor performance. On the contrary, I think that approach defeats the purpose of abstraction and
 makes writing generic code difficult, which is one of major advantages of using a dynamically typed
 language. Instead, performance should be achieved via clear documentation, programmer's
-awareness and profiling without any compromise to the abstration itself.
+awareness and profiling without any compromise to the abstration itself. Also, what makes the 
+above "design choice" even worse is, Clojure itself is not even consistent with it.
 
 If you are interested, you can read our debate on Google Clojure group:
 <ol>
@@ -28,16 +29,38 @@ team. One of the purposes of this library is for me to get such support from the
 community.
 
 Note 2: Some people may wonder why I am not happy just to use these functions as they are
-without being included in the core. Several reasons. 1) these are very basic functions. If
-people agree with me that those functions are better than what is already in the core, or filled
-a gap in the core, then that is the logical place for them. 2) If they are in the core, they
-benefit every one using the language and hence also the language itself. 3) If they are in the core,
-they may be optimized to achieve efficiency not possible otherwise because the implementation
-may have access to some internal parts. And the better efficiency will benefit every one too.
+without being included in the core. Here are the reasons:
 
-Note 3: For reasons in Note 2, please focus on the function interface and not the efficiency now.
-Of course you are welcome to help me improve the efficiency even with the limitation that they are
-outside of the core.
+<ol>
+<li>
+   These are very basic functions. If people agree with me that those functions are better
+   than what is already in the core, or filled a gap in the core, then that is the logical
+   place for them.
+</li>
+
+<li>
+   If they are in the core, they benefit every one using the language and hence also make
+   the language more successful. I want the language to be successful so it can benefit
+   me.
+</li>
+
+<li>
+   If they are in the core, they may be optimized to achieve efficiency not possible
+   otherwise because the implementation may have access to some internal parts. And the
+   better efficiency will benefit every one too.
+</li>
+
+<li>
+   Last but not the least, I hope by pushing these changes into the core, a broad
+   consensus will form on the rejection of the design principle mentioned above, which
+   sacrifices abstraction coherence for (doubtfully any) speed gain. That may bring about
+   changes to fix other parts with similar problems.
+</li>
+</ol>
+
+Note 3: For reasons in Note 2, for now please focus more on the function interface rather
+than the efficiency. Of course you are welcome to help me improve the efficiency even with
+the limitation that they are outside of the core.
 
 ## Usage
 
