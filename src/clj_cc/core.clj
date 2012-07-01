@@ -1,23 +1,58 @@
 
 (ns clj-cc.core)
 
+(defprotocol IJavaArray
+  (jarray? [x]))
+
+;; dynamically extend IJavaArray protocol. thank David Nolen for this cool idea.  see
+;; http://dosync.posterous.com/51626638
+(extend-type Object
+  IJavaArray
+  (jarray? [x]
+            (let [c (.getClass x)]
+             (if (.isArray c)
+               (do
+                 (extend-type (.getClass x)
+                   IJavaArray
+                   (jarray? [x] true))
+                 true)
+               false))))
+
 ;; Thank puzzler for the protocol based implementation.
 (defprotocol ILast
   (last [s]
     "Like the original 'clojure.core/last'. However, it will be much more efficient on
-  vectors, so we don't need to choose between 'last' and 'peek'."))
+  vectors and Java arrays, so we don't need to choose between 'last' and 'peek'."))
 
 (extend-protocol ILast
   nil
   (last [s] (clojure.core/last s))
+
   Object
-  (last [s] (clojure.core/last s))
+  (last [s]
+    (if (jarray? s)
+      (do
+        ;; dynamically extend ILast to type
+        (extend-type (.getClass s)
+          ILast
+          (last [s]
+            (let [len (alength s)]
+              ;; to conform to the original last behavior (last []) => nil
+              (if (> len 0)
+                (aget s (dec len))
+                nil))))
+        (last s))
+      (clojure.core/last s)))
+
   clojure.lang.ISeq
   (last [s] (clojure.core/last s))
+
   clojure.lang.Reversible
   (last [s] (first (rseq s)))
+
   java.lang.String
   (last [s] (nth s (dec (count s))))
+
   clojure.lang.IPersistentVector
   (last [s] (peek s)))
 

@@ -72,10 +72,10 @@ Right now there are only three functions, here are their doc strings:
 
 -------------------------
 clj-cc.core/last
-([coll])
+([s])
 
   Like the original 'clojure.core/last'. However, it will be much more efficient on
-  vectors, so we don't need to choose between 'last' and 'peek'.
+  vectors and Java arrays, so we don't need to choose between 'last' and 'peek'.
 
 -------------------------
 clj-cc.core/append
